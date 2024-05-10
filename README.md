@@ -1,1 +1,3 @@
-
+Fuk Chuen KWONG
+041097040
+Pokedex
