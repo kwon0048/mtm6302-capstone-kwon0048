@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Silkscreen" rel="stylesheet">
+  <link rel="icon" href="imgs/favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokedex</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/script.js" defer></script>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="bg-red-600 p-4 text-white">
+    <div class="container mx-auto flex justify-between items-center">
+      <a href="/" class="flex items-center">
+        <img src="/imgs/logo.png" alt="Logo" class="h-10 mr-3">
+        <span class="text-xl text-white font-semibold">Pokédex Library</span>
+      </a>
+      <div class="relative w-full sm:w-auto">
+        <input type="search"
+          class="bg-white-800 text-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none w-full sm:w-auto"
+          placeholder="Enter Name or ID">
+        <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
+          🔍
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="p-10 flex flex-col justify-center items-center bg-fixed bg-center">
+
+    <div class="dropdown inline-block relative">
+      <button class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
+        <span class="mr-1">All</span>
+        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+        </svg>
+      </button>
+      <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+        <li class=""><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+            href="#">All</a></li>
+        <li class=""><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+            href="#">Caught</a></li>
+        <li class=""><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Uncaught</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Content -->
+  <div id="content"
+    class="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-4">
+    <!-- Cards -->
+  </div>
+  <div class="p-6 flex flex-col justify-center items-center ">
+    <button onclick="toggleInfo()"
+      class="mt-4 px-12 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:bg-red-600">Load
+      More</button>
+  </div>
+
+  <!-- Modal -->
+  <div id="detailModal" class="hidden fixed z-10 inset-0 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen">
+      <div class="fixed inset-0 bg-black opacity-50"></div>
+      <div
+        class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full lg:max-w-2xl p-4 w-full">
+        <div class="border-b p-2 text-lg font-medium">
+          <span id="pokemon-id">#001</span> <span id="pokemon-name">#Bulbasaur</span>
+        </div>
+        <div class="grid grid-cols-2 gap-4 p-4 ">
+          <!-- First row, first column -->
+          <div class="col-span-2 sm:col-span-1 flex justify-center items-cent">
+            <img
+              src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/shiny/1.gif"
+              alt="" class=".card-image">
+
+          </div>
+          <!-- First row, second column -->
+          <div id="pokemon-stats" class="col-span-2 sm:col-span-1">
+            <h2 class="text-lg font-semibold">Stats</h2>
+            <div class="mb-1 text-base font-medium text-green-700 dark:text-green-500">HP</div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5  dark:bg-gray-700">
+              <div id="pokemon-hp" class="bg-green-600 h-2.5 rounded-full dark:bg-green-500" style="width: 20%"></div>
+            </div>
+            <div class="mb-1 text-base font-medium text-red-700 dark:text-red-500">Attack</div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5  dark:bg-gray-700">
+              <div id="pokemon-attack" class="bg-red-600 h-2.5 rounded-full dark:bg-red-500" style="width: 45%"></div>
+            </div>
+            <div class="mb-1 text-base font-medium text-blue-700 dark:text-blue-500">Defense</div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5  dark:bg-gray-700">
+              <div id="pokemon-defense" class="bg-blue-600 h-2.5 rounded-full" style="width: 30%"></div>
+            </div>
+            <div class="mb-1 text-base font-medium text-purple-700 dark:text-purple-500">Special Attack</div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+              <div id="pokemon-special-attack" class="bg-purple-600 h-2.5 rounded-full dark:bg-purple-500"
+                style="width: 22%"></div>
+            </div>
+            <div class="mb-1 text-base font-medium text-indigo-700 dark:text-indigo-500">Special Defense</div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5  dark:bg-gray-700">
+              <div id="pokemon-special-defence" class="bg-indigo-600 h-2.5 rounded-full dark:bg-indigo-500"
+                style="width: 30%"></div>
+            </div>
+            <div class="mb-1 text-base font-medium text-yellow-700 dark:text-yellow-500">Speed</div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5  dark:bg-gray-700">
+              <div id="pokemon-speed" class="bg-yellow-400 h-2.5 rounded-full" style="width: 35%"></div>
+            </div>
+          </div>
+
+          <div id="pokemon-description" class="col-span-3">
+            <h2 class="text-lg font-semibold">Description</h2>
+            <p>It carries a seed on its back right from birth. As its body grows larger, the seed does too.</p>
+          </div>
+
+
+          <!-- Second row, first column -->
+          <div id="pokemon-type" class="col-span-2 sm:col-span-1">
+            <h2 class="text-lg font-semibold">Type</h2>
+            <p><span
+                class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Grass</span>
+              <span
+                class="bg-purple-100 text-purple-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">Poison</span>
+            </p>
+          </div>
+          <!-- Second row, second column -->
+          <div id="pokemon-weaknesses" class="col-span-2 sm:col-span-1">
+            <h2 class="text-lg font-semibold">Weaknesses</h2>
+
+            <p class="flex flex-wrap"><span
+                class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Fire</span><span
+                class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Ice</span><span
+                class="bg-indigo-100 text-indigo-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">Flying</span><span
+                class="bg-pink-100 text-pink-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">Psychic</span>
+            </p>
+
+
+          </div>
+        </div>
+        <!-- Third row with three columns -->
+        <div id="pokemon-evolutions" class="grid grid-cols-3 gap-4 p-4 ">
+          <div class="col-span-3">
+            <h2 class="text-lg font-semibold">Evolutions</h2>
+          </div>
+          <div class="col-span-3 sm:col-span-1">
+            <h2 class="text-lg font-semibold">Bulbasaur</h2>
+            <div class="flex items-center justify-center "><img class="evolutions-image"
+                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/shiny/1.gif"
+                alt=""></div>
+          </div>
+          <div class="col-span-3 sm:col-span-1">
+            <h2 class="text-lg font-semibold">Ivysaur</h2>
+            <div class="flex items-center justify-center "><img class="evolutions-image"
+                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/shiny/2.gif"
+                alt=""></div>
+          </div>
+          <div class="col-span-3 sm:col-span-1">
+            <h2 class="text-lg font-semibold">Venusaur</h2>
+            <div class="flex items-center justify-center "><img class="evolutions-image"
+                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/shiny/3.gif"
+                alt=""></div>
+          </div>
+        </div>
+        <div class="flex justify-end p-2 border-t">
+          <button id="cancelModal"
+            class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 mr-2">Cancel</button>
+          <button class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Catch</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

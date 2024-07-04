@@ -1,0 +1,15 @@
+body {
+  font-family: 'Silkscreen', cursive;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.card-image {
+  width: 80%;
+}
+
+.evolutions-image {
+  width: 60%;
+}
