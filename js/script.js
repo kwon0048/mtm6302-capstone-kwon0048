@@ -401,4 +401,49 @@ document.getElementById('catchButton').addEventListener('click', () => {
   let caughtPokemons = JSON.parse(localStorage.getItem('caughtPokemons')) || [];
   if(!checkIfExistInLocalStorage(pokemonName)){
     caughtPokemons.push(pokemonName);
-    localStorage.setItem('caughtPokemons', JSON.stringify(cau
+    localStorage.setItem('caughtPokemons', JSON.stringify(caughtPokemons));
+  }else{
+    caughtPokemons = caughtPokemons.filter(pokemon => pokemon !== pokemonName);
+    localStorage.setItem('caughtPokemons', JSON.stringify(caughtPokemons));
+  }
+  offset = 0;
+  const option = localStorage.getItem('selectedFilterOption');
+  if(option != 2){
+    const container = document.querySelector('#content');
+    container.innerHTML = ''; 
+    loopRecords();
+  }
+  document.getElementById('searchPokemonByName').value = '';
+  document.getElementById('detailModal').classList.add('hidden');
+});
+
+const checkIfExistInLocalStorage = (pokemonName) => {
+  const caughtPokemons = JSON.parse(localStorage.getItem('caughtPokemons')) || [];
+  console.log(caughtPokemons);
+  return caughtPokemons.includes(pokemonName);
+};
+
+
+function selectOption(option) {
+  offset = 0;
+  localStorage.setItem('selectedFilterOption', option);
+  document.getElementById('selectedFilterOption').textContent = filterOption[option];
+  const container = document.querySelector('#content');
+  container.innerHTML = ''; // Clear previous cards
+  loopRecords();
+}
+
+function loadFilter() {
+  console.log('loadFilter');
+  const option = localStorage.getItem('selectedFilterOption');
+  if (option) {
+      document.getElementById('selectedFilterOption').textContent = filterOption[option];
+  }
+}
+
+const main = async () => {
+  await loopRecords();
+  await loadFilter();
+};
+
+main();
